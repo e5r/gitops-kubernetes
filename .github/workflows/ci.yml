@@ -39,8 +39,12 @@ jobs:
 
       - name: Configure Poetry
         run: |
-          poetry config settings.virtualenvs.in-project false
-          poetry config settings.virtualenvs.path ~/.virtualenvs
+          poetry config virtualenvs.in-project false
+          poetry config virtualenvs.path ~/.virtualenvs
+
+      - name: Show Poetry settings
+        run: |
+          poetry config --list
 
       - name: Install dependencies
         run: poetry install
