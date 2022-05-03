@@ -1,6 +1,6 @@
 name: CI
 
-on: [push]
+on: push
 
 jobs:
   test:
@@ -18,19 +18,18 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Setup Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+      - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Setup Poetry ${{ matrix.poetry-version }}
-        uses: abatilo/actions-poetry@v2.0.0
+      - uses: abatilo/actions-poetry@v2.0.0
         with:
           poetry-version: ${{ matrix.poetry-version }}
+
+      - name: Poetry help message
         run:  poetry --help
 
-      - name: Cache Poetry virtualenv
-        uses: actions/cache@v2
+      - uses: actions/cache@v2
         id: cache
         with:
           path: ~/.virtualenvs
