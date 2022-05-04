@@ -39,7 +39,7 @@ jobs:
         id: cache-virtualenvs
         with:
           path: ~/.virtualenvs
-          key: poetry-${{ hashFiles('poetry.lock') }}
+          key: poetry-${{ runner.os }}-${{ hashFiles('poetry.lock') }}
 
       - name: Configure Poetry
         run: |
