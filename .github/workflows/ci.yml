@@ -3,8 +3,7 @@ name: CI
 on: push
 
 jobs:
-  test:
-    name: Build, Test and Tag
+  Build-And-Test:
     strategy:
       fail-fast: false
       matrix:
@@ -54,3 +53,23 @@ jobs:
 
       - name: Test
         run: poetry run pytest
+
+  Tag:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - name: Exibir hash do commit
+        run: |
+            export GIT_COMMITTER_NAME=$(git show -s --format='%cn')
+            export GIT_COMMITTER_EMAIL=$(git show -s --format='%ce')
+            export GIT_AUTHOR_NAME=$(git show -s --format='%an')
+            export GIT_AUTHOR_EMAIL=$(git show -s --format='%ae')
+            export COMMIT_HASH=$(git show -s --format='%H')
+            export SUBJECT=$(git show -s --format='%s')
+
+      - name: Exibir variáveis de ambiente
+        run: env
