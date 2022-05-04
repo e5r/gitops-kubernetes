@@ -1,6 +1,12 @@
 name: CI
 
-on: push
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
   Build-And-Test:
@@ -34,13 +40,6 @@ jobs:
       - name: Show Poetry version
         run:  poetry --version
 
-      - name: Setup Cache
-        uses: actions/cache@v3
-        id: cache-virtualenvs
-        with:
-          path: ~/.virtualenvs
-          key: poetry-${{ runner.os }}-${{ hashFiles('poetry.lock') }}
-
       - name: Configure Poetry
         run: |
           poetry config virtualenvs.in-project false
@@ -49,16 +48,20 @@ jobs:
 
       - name: Install dependencies
         run: poetry install
-        if: steps.cache-virtualenvs.outputs.cache-hit != 'true'
 
       - name: Test
         run: poetry run pytest
 
   Tag:
+    needs: Build-And-Test
+    # Este job só deve rodar para um pull na "master"
+    # if: ${{ github.ref == 'master' }}
+
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout ${{ github.ref }}
+        uses: actions/checkout@v3
         with:
           fetch-depth: 1
 
