@@ -9,7 +9,8 @@ on:
       - master
 
 jobs:
-  Build-And-Test:
+  build-and-test-job:
+    name: Build & Test
     strategy:
       fail-fast: false
       matrix:
@@ -52,10 +53,10 @@ jobs:
       - name: Test
         run: poetry run pytest
 
-  Tag:
-    needs: Build-And-Test
-    # Este job só deve rodar para um pull na "master"
-    # if: ${{ github.ref == 'master' }}
+  generate-git-tag-job:
+    name: Generate Git tag
+    needs: build-and-test-job
+    if: ${{ github.ref == 'refs/heads/master' }}
 
     runs-on: ubuntu-latest
 
@@ -73,6 +74,4 @@ jobs:
             export GIT_AUTHOR_EMAIL=$(git show -s --format='%ae')
             export COMMIT_HASH=$(git show -s --format='%H')
             export SUBJECT=$(git show -s --format='%s')
-
-      - name: Exibir variáveis de ambiente
-        run: env
+            env
