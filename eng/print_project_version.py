@@ -2,7 +2,7 @@
 
 Este script é utilizado pelas rotinas de build, integração, entrega e outros
 utilitários que precisam sincronizar o número da versão do código com o número
-definido no arquivo 'pyproject.toml' na raiz do projeto.
+definido no arquivo 'pyproject.toml' na raiz do repositório.
 """
 
 import sys
