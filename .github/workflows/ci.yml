@@ -68,10 +68,17 @@ jobs:
 
       - name: Exibir hash do commit
         run: |
+            # Compondo variáveis
             export GIT_COMMITTER_NAME=$(git show -s --format='%cn')
             export GIT_COMMITTER_EMAIL=$(git show -s --format='%ce')
             export GIT_AUTHOR_NAME=$(git show -s --format='%an')
             export GIT_AUTHOR_EMAIL=$(git show -s --format='%ae')
             export COMMIT_HASH=$(git show -s --format='%H')
             export SUBJECT=$(git show -s --format='%s')
-            env
+            # Imprimindo variáveis
+            echo "GIT_COMMITTER_NAME=$GIT_COMMITTER_NAME"
+            echo "GIT_COMMITTER_EMAIL=$GIT_COMMITTER_EMAIL"
+            echo "GIT_AUTHOR_NAME=$GIT_AUTHOR_NAME"
+            echo "GIT_AUTHOR_EMAIL=$GIT_AUTHOR_EMAIL"
+            echo "COMMIT_HASH=$COMMIT_HASH"
+            echo "SUBJECT=$SUBJECT"
