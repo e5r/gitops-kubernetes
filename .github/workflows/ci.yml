@@ -20,23 +20,23 @@ jobs:
 
       - name: Setup Python
         uses: actions/setup-python@v3
-          with:
-            python-version: ${{ matrix.python-version }}
+        with:
+          python-version: ${{ matrix.python-version }}
 
       - name: Setup Poetry
         uses: abatilo/actions-poetry@v2.0.0
-          with:
-            poetry-version: ${{ matrix.poetry-version }}
+        with:
+          poetry-version: ${{ matrix.poetry-version }}
 
       - name: Poetry help message
         run:  poetry --help
 
       - name: Setup Cache
         uses: actions/cache@v3
-          id: cache-virtualenvs
-          with:
-            path: ~/.virtualenvs
-            key: poetry-${{ hashFiles('**/poetry.lock') }}
+        id: cache-virtualenvs
+        with:
+          path: ~/.virtualenvs
+          key: poetry-${{ hashFiles('**/poetry.lock') }}
 
       - name: Configure Poetry
         run: |
