@@ -74,5 +74,5 @@ jobs:
         run: |
             TAG_HASH=$(git show -s --format='%H')
             TAG_VERSION=$(poetry run python ./eng/print_project_version.py ./pyproject.toml)
-            git tag -f "v${TAG_VERSION}" "${TAG_HASH}"
-            git push -f --tags
+            git tag "v${TAG_VERSION}" "${TAG_HASH}"
+            git push --tags
