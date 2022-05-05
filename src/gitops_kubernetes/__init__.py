@@ -1,1 +1,3 @@
-__version__ = '0.1.0'
+from . import pkg_version
+
+__version__ = pkg_version.__version__

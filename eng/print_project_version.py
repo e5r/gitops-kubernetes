@@ -5,25 +5,17 @@ utilitários que precisam sincronizar o número da versão do código com o núm
 definido no arquivo 'pyproject.toml' na raiz do repositório.
 """
 
+import os
 import sys
-import tomli
+import eng_cli_util as cli
 
-def show_usage():
-    print('Usage:', sys.argv[0], '{pyproject_toml_file}')
+current_directory = os.path.dirname(__file__)
+project_file_path = os.path.join(current_directory, '..', 'pyproject.toml')
 
-if(len(sys.argv) != 2):
-    show_usage()
+version_number = cli.get_pkg_version(project_file_path)
+
+if(version_number == None):
+    print('O arquivo', project_file_path, 'não tem a entrada [tool.poetry.version] esperada!')
     sys.exit(1)
 
-with open(sys.argv[1], 'rb') as file:
-    toml_dict = tomli.load(file)
-
-    # Conferindo se o arquivo TOML tem a entrada [tool.poetry.version] esperada
-    if('tool' not in toml_dict or
-       'poetry' not in toml_dict['tool'] or
-       'version' not in toml_dict['tool']['poetry']):
-        print('O arquivo', sys.argv[1], 'não tem a entrada [tool.poetry.version] esperada!')
-        sys.exit(2)
-
-    # Imprime o número da versão
-    print(toml_dict['tool']['poetry']['version'])
+print(version_number)
