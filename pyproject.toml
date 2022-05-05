@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gitops-kubernetes"
-version = "0.1.0"
+version = "0.1.1"
 description = "Implementa GitOps com Kubernetes"
 authors = ["E5R Development Team"]
 maintainers = ["Erlimar Silva Campos <erlimar@gmail.com>"]
