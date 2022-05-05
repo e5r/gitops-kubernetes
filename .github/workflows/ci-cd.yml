@@ -1,4 +1,4 @@
-name: CI
+name: CI-CD
 
 on:
   push:
@@ -44,16 +44,14 @@ jobs:
       - name: Test
         run: poetry run pytest
 
-  generate-git-tag-job:
-    name: Generate Git tag
+  publish-job:
+    name: Publish to PyPi and Git tag
     needs: build-and-test-job
     if: ${{ github.ref == 'refs/heads/master' }}
-
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout ${{ github.ref }}
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 1
 
@@ -70,7 +68,14 @@ jobs:
       - name: Install dependencies
         run: poetry install
 
-      - name: Create Git tag
+      - name: Publish to PyPi
+        shell: bash
+        env:
+          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        run: |
+          poetry publish -vv --build -u '__token__' -p "$PYPI_TOKEN"
+
+      - name: Publish to Git tag
         run: |
             TAG_HASH=$(git show -s --format='%H')
             TAG_VERSION=$(poetry run python ./eng/print_project_version.py ./pyproject.toml)
