@@ -38,6 +38,9 @@ jobs:
       - name: Install dependencies
         run: poetry install
 
+      - name: Pre-commit
+        run: poetry run pre-commit run --all-files
+
       - name: Build
         run: poetry build
 
