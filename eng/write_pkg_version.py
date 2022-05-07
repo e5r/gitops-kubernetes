@@ -10,15 +10,17 @@ import sys
 import eng_cli_util as cli
 
 current_directory = os.path.dirname(__file__)
-project_file_path = os.path.join(current_directory, '..', 'pyproject.toml')
-version_file_path = os.path.join(current_directory, '..', 'src', 'gitops_kubernetes', 'pkg_version.py')
+project_file_path = os.path.join(current_directory, "..", "pyproject.toml")
+version_file_path = os.path.join(
+    current_directory, "..", "src", "gitops_kubernetes", "pkg_version.py"
+)
 
 version_number = cli.get_pkg_version(project_file_path)
 
-if(version_number == None):
-    print('O arquivo', project_file_path, 'não tem a entrada [tool.poetry.version] esperada!')
+if version_number == None:
+    print("O arquivo", project_file_path, "não tem a entrada [tool.poetry.version] esperada!")
     sys.exit(1)
 
-with open(version_file_path, 'w', encoding='utf-8') as file:
+with open(version_file_path, "w", encoding="utf-8") as file:
     file.write(f'__version__ = "{version_number}"')
     file.write("\n")
